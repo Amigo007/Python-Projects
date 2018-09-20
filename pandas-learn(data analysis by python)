@@ -1,0 +1,244 @@
+https://www.cnblogs.com/nxld/p/6756492.html  excel 比较pandas
+
+ 
+
+
+import pandas as pd
+
+#打开旧数据表格
+df=pd.read_excel(r"C:\Users\wb-zlf394266\Desktop\AE_EN2AR_offer_trans_100_3_20180917_ctrl.xlsx",sheet_name=0)
+#查看数据是否正确
+df
+
+#筛选需要数据，LQR模板为 “segment id” ,“source”,"target"（提取excel 第三行开始的，1 2 5列数据）
+a=df.iloc[3:,[0,3,6]]
+a
+
+
+#查看某一列的唯一值
+df['city'].unique()
+#删除某一列的重复值（出现在前的保留，在后的删除）
+df['city'].drop_duplicates()
+
+#某列中的数据替换 (city 列 用B 替换A)
+df['city'].replace('A', 'B')
+
+
+#条件筛选出 Team 为A 以及 saleman team year 数据
+df.loc[df['Team']== 'A',['Salesman', 'Team','Year']]
+#单列满足条件筛选出所有
+df.loc[df['Team']== 'A']
+
+#多条件筛选
+df.loc[ (df['Team']== 'A' ) & (df['Total'] > 15000 ) ]
+#多条件筛选后增列 加一组数据加上 ‘Good’标签
+df.loc[ (df['Team']== 'A' ) & (df['Total'] > 15000 ) , 'Tag']  =  'Good'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 导入数据表
+
+import pandas as pd
+
+df = pd.Dataframe(pd.read_excel("name.xlsx"))
+
+
+2 数据查看
+
+df.shape  查看维度
+
+df.dtypes 查看类型
+
+df.info() 
+
+df.describe()
+
+df.isnull() 空值的返回true 否则false
+
+df["city"].unique() 返回唯一值
+
+df.values 数值数组
+
+df.columns 列名称
+
+df.index 索引
+
+df.head()  前几行数据
+
+df.tail() 末尾几行数据
+
+
+
+3数据清洗
+
+
+a 处理空值
+
+df.dropna() Dropna函数用来删除数据表中包含空值的数据
+
+df.fillna()对空值进行填充
+
+
+b 清理空格
+
+df["city"].str.strip() 字符串，删除首尾空格
+
+
+c 大小写转换 lower（） upper（）
+
+df["city"] = df["city"].str.lower()
+
+
+d 更改数据格式
+
+df["price"].astype("int")
+
+
+e  更改列名称
+
+df.rename(columns = {"city":"newcity"})
+
+
+f 删除重复值
+
+df["city"].drop_duplicates()
+
+
+g 替换
+
+df["city"].replace("sh","shanghai")
+
+
+
+4数据预处理
+
+a 数据表合并 
+
+pd.merge(df , df1 , how = , on = )
+
+
+b 设置索引列
+
+df.set_index("id")
+
+
+c 排序
+
+按索引排序 df.sort_index()
+
+按列值排序 df.sort_values(by = ["age"])
+
+
+d 数组分组
+
+df["group"] = np.where(df["price"] > 300 , "high","low")
+
+df["sign"]=np.where((df.price > 300) & (df.city == "beijing") , 1 ， np.nan)  等价于
+
+df.loc[(df.price > 300) & (df.city == "beijing"),"sign2"] = 1
+
+e 数据分列
+
+splits = pd.Dataframe(x.split("-") for x in df.category, index = df.index , columns = ["category1","size"])
+
+df = pd.merge(df , splits, right_index = True , left_index = True)
+
+
+5 数据提取
+
+a 按标签或位置提取
+
+df.loc[]    loc函数按数据表的索引标签进行提取
+
+df.iloc[]  按位置
+
+df.ix[]  按标签和位置
+
+b 按条件提取
+
+df.loc[df.city isin(["shanghai"])]
+
+c 提取部分字符
+
+df.city.str[:3]
+
+
+6数据筛选 
+
+a 采用loc函数 和条件
+
+>, == ,>= , != , & , | ,  
+
+df.loc[(df.price >= 300) | (df.city == "beijing")] 
+
+b  配合sum() , count() ， sort_values()等函数
+
+df.loc[(df.price >= 300) | (df.city == "beijing"), ].sort_values(by = 'age')
+
+df.loc[(df.price >= 300) | (df.city == "beijing"), ].sort_values(by = 'age').price.sum()
+
+c 使用query()函数
+
+df.query('city == ["beijing","shanghai"]').price.sum()
+
+
+d 分类汇总 groupby函数 ， 并制定分组后的汇总方式，常见的是计数，求和，最大值，最小值，均值
+
+df.groupby("city").count() 对所有列进行计数汇总
+
+df.groupby("city")["id"].count() 对特定的id列进行计数汇总
+
+df.groupby(["city","size"])["id"].count() 对两个字段进行计数汇总
+
+df.groupby("city")["price"].agg([len , np.sum , np.mean]) 对汇总结果进行多维度的计算
+
+e 数据透视 pivot_table
+
+
+7 数据统计
+
+a 数据采样
+
+df.sample(n = 3) 
+
+b 描述统计
+
+df.describe().round(2).T
+
+c 标准差
+
+df.price.std()
+
+d 协方差
+
+df.price.cov(df.age) 两个字段的协方差
+
+df.cov() 各列间的协方差
+
+e 相关系数
+
+df.price.corr(df.age) 
+
+df.corr() 各字段间的相关性
