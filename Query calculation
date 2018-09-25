@@ -1,0 +1,33 @@
+import pandas as pd
+import numpy as np
+
+
+ #将需要用的表的路径放在‘’
+ df=pd.read_excel(r"C:\Users\wb-zlf394266\Desktop\Q\FY19-MS8-FREN-AE&SC-QUERY-TOP&BOT-BATCH2-COMBINE.xlsx",sheet_name=0)
+ #预览列
+ df.columns
+
+
+ #GAT： GOOGLE-WEB& AE &TOP
+ GAT=df.loc[(df['translator']== 'Google-Web')&(df['segment data set name']=='FY19-MS8-FREN-AE-Query-Top-300-Source-Rst1')]
+
+  Accuracy=GAT.loc[GAT['Issue Types']=='Accuracy']
+  a=Accuracy['ID'].drop_duplicates()
+
+  #看Accuracy unique ID 和ID计数
+  print('"Accuracy"',a.describe())
+  print()
+  print('"Accuracy unique ID"')
+  for a1 in (a):
+      print(a1)
+    
+
+
+  Source_Issue=GAT.loc[GAT['Issue Types']=='Source_Issue']
+  b=Source_Issue['ID'].drop_duplicates()
+  #看Source_Issue unique ID 和ID 计数
+  print('"Source_Issue"',b.describe())
+  print()
+  print('"Source_Issue unique ID"')
+  for b1 in (b):
+     print(b1)
