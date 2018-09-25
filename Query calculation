@@ -15,7 +15,7 @@ import numpy as np
   a=Accuracy['ID'].drop_duplicates()
 
   #看Accuracy unique ID 和ID计数
-  print('"Accuracy"',a.describe())
+  print('"Accuracy"',a.count())
   print()
   print('"Accuracy unique ID"')
   for a1 in (a):
@@ -26,8 +26,26 @@ import numpy as np
   Source_Issue=GAT.loc[GAT['Issue Types']=='Source_Issue']
   b=Source_Issue['ID'].drop_duplicates()
   #看Source_Issue unique ID 和ID 计数
-  print('"Source_Issue"',b.describe())
+  print('"Source_Issue"',b.count())
   print()
   print('"Source_Issue unique ID"')
   for b1 in (b):
      print(b1)
+     
+  Product_Item=GAT.loc[(GAT['Issue Types']=='Fluency')&(GAT['Subtypes']=='Grammar_Word_Form')&(GAT['Labels']=='Product_Item')]
+  c=Product_Item['ID'].drop_duplicates()
+  #看Product_Item unique ID 和ID 计数
+  print('"Product_Item"',c.count())
+  print()
+  print('"Product_Item unique ID"')
+  for c1 in (c):
+    print(c1)
+    
+  Brand_Series=GAT.loc[(GAT['Issue Types']=='Fluency')&(GAT['Subtypes']=='Grammar_Function_Words')&(GAT['Labels']=='Brand&Series')]
+  cc=Brand_Series['ID'].drop_duplicates()
+  #看Brand_Series unique ID 和ID 计数
+  print('"Brand_Series"',cc.count())
+  print()
+  print('"Brand_Series unique ID"')
+  for cc1 in (cc):
+    print(cc1) 
