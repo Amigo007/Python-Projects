@@ -3,6 +3,11 @@ https://www.cnblogs.com/nxld/p/6756492.html  excel 比较pandas
  
 
 
+https://www.cnblogs.com/nxld/p/6756492.html  excel 比较pandas
+
+ 
+
+
 import pandas as pd
 
 #打开旧数据表格
@@ -34,6 +39,10 @@ df.loc[ (df['Team']== 'A' ) & (df['Total'] > 15000 ) ]
 #多条件筛选后增列 加一组数据加上 ‘Good’标签
 df.loc[ (df['Team']== 'A' ) & (df['Total'] > 15000 ) , 'Tag']  =  'Good'
 
+#单列各数值的计数,默认降序排列，升序排列(ascending = True)
+df[‘ID’].value_counts()
+#单列各数值的计数占比，可以加参数 normalize=True：
+df[‘ID’].value_counts(normalize=True)
 
 
 
