@@ -49,3 +49,8 @@ import numpy as np
   print('"Brand_Series unique ID"')
   for cc1 in (cc):
     print(cc1) 
+
+  #将两列数据合并（product_item&brand_series）就是影响Fluency的数目
+  d=c.append(cc)
+  d.drop_duplicates()
+ 
