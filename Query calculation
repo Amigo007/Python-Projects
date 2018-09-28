@@ -2,55 +2,53 @@ import pandas as pd
 import numpy as np
 
 
- #将需要用的表的路径放在‘’
- df=pd.read_excel(r"C:\Users\wb-zlf394266\Desktop\Q\FY19-MS8-FREN-AE&SC-QUERY-TOP&BOT-BATCH2-COMBINE.xlsx",sheet_name=0)
- #预览列
- df.columns
+#将需要用的表的路径放在‘’
+df=pd.read_excel(r"C:\Users\wb-zlf394266\Desktop\Q\FY19-MS8-FREN-AE&SC-QUERY-TOP&BOT-BATCH2-COMBINE.xlsx",sheet_name=0)
+#预览列
+df.columns
 
 
- #GAT： GOOGLE-WEB& AE &TOP
- GAT=df.loc[(df['translator']== 'Google-Web')&(df['segment data set name']=='FY19-MS8-FREN-AE-Query-Top-300-Source-Rst1')]
+#GAT： GOOGLE-WEB& AE &TOP
+GAT=df.loc[(df['translator']== 'Google-Web')&(df['segment data set name']=='FY19-MS8-FREN-AE-Query-Top-300-Source-Rst1')]
 
-  Accuracy=GAT.loc[GAT['Issue Types']=='Accuracy']
-  a=Accuracy['ID'].drop_duplicates()
+Accuracy=GAT.loc[GAT['Issue Types']=='Accuracy']
+a=Accuracy['ID'].drop_duplicates()
 
-  #看Accuracy unique ID 和ID计数
-  print('"Accuracy"',a.count())
-  print()
-  print('"Accuracy unique ID"')
-  for a1 in (a):
-      print(a1)
+#看Accuracy unique ID 和ID计数
+print('Accuracy:',a.count())
+print()
+print('Accuracy unique ID:')
+a
     
 
 
-  Source_Issue=GAT.loc[GAT['Issue Types']=='Source_Issue']
-  b=Source_Issue['ID'].drop_duplicates()
-  #看Source_Issue unique ID 和ID 计数
-  print('"Source_Issue"',b.count())
-  print()
-  print('"Source_Issue unique ID"')
-  for b1 in (b):
-     print(b1)
+Source_Issue=GAT.loc[GAT['Issue Types']=='Source_Issue']
+b=Source_Issue['ID'].drop_duplicates()
+#看Source_Issue unique ID 和ID 计数
+print('Source_Issue:',b.count())
+print()
+print('Source_Issue unique ID:')
+for b1 in (b):
+    print(b1)
      
-  Product_Item=GAT.loc[(GAT['Issue Types']=='Fluency')&(GAT['Subtypes']=='Grammar_Word_Form')&(GAT['Labels']=='Product_Item')]
-  c=Product_Item['ID'].drop_duplicates()
-  #看Product_Item unique ID 和ID 计数
-  print('"Product_Item"',c.count())
-  print()
-  print('"Product_Item unique ID"')
-  for c1 in (c):
+Product_Item=GAT.loc[(GAT['Issue Types']=='Fluency')&(GAT['Subtypes']=='Grammar_Word_Form')&(GAT['Labels']=='Product_Item')]
+c=Product_Item['ID'].drop_duplicates()
+#看Product_Item unique ID 和ID 计数
+print('Product_Item:',c.count())
+print()
+print('Product_Item unique ID:')
+for c1 in (c):
     print(c1)
     
-  Brand_Series=GAT.loc[(GAT['Issue Types']=='Fluency')&(GAT['Subtypes']=='Grammar_Function_Words')&(GAT['Labels']=='Brand&Series')]
-  cc=Brand_Series['ID'].drop_duplicates()
-  #看Brand_Series unique ID 和ID 计数
-  print('"Brand_Series"',cc.count())
-  print()
-  print('"Brand_Series unique ID"')
-  for cc1 in (cc):
+Brand_Series=GAT.loc[(GAT['Issue Types']=='Fluency')&(GAT['Subtypes']=='Grammar_Function_Words')&(GAT['Labels']=='Brand&Series')]
+cc=Brand_Series['ID'].drop_duplicates()
+#看Brand_Series unique ID 和ID 计数
+print('Brand_Series:',cc.count())
+print()
+print('Brand_Series unique ID:')
+for cc1 in (cc):
     print(cc1) 
 
-  #将两列数据合并（product_item&brand_series）就是影响Fluency的数目
-  d=c.append(cc)
-  d.drop_duplicates()
- 
+#将两列数据合并（product_item&brand_series）就是影响Fluency的数目
+d=c.append(cc)
+d.drop_duplicates()
