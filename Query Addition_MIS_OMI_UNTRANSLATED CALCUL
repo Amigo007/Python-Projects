@@ -1,0 +1,33 @@
+import pandas as pd
+import numpy as np
+
+
+#将需要用的表的路径放在‘’
+df=pd.read_excel(r"C:\Users\wb-zlf394266\Desktop\搜索query\AREN\AREN-SC-QUERY.xlsx",sheet_name=0)
+#预览列
+df.columns
+
+
+#GAT： GOOGLE-WEB& AE &TOP
+GAT=df.loc[(df['translator']== '模拟sc搜索翻译')]
+print(GAT.translator.drop_duplicates())
+print()
+#count 数据 Addition Mistranslation Omission Untranslated
+addition=GAT.loc[GAT['Subtypes']=='Addition']
+a=addition['ID']
+print("Addition_count:",a.count())
+
+Mistranslation=GAT.loc[GAT['Subtypes']=='Mistranslation']
+b=Mistranslation['ID']
+print("Mistranslation_count:",b.count())
+
+
+Omission=GAT.loc[GAT['Subtypes']=='Omission']
+c=Omission['ID']
+print("Omission_count:",c.count())
+
+
+
+Untranslated=GAT.loc[GAT['Subtypes']=='Untranslated']
+d=Untranslated['ID']
+print("Untranslated:",d.count())
