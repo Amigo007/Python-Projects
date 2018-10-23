@@ -62,13 +62,13 @@ import numpy as np
 
 
 #将需要用的表的路径放在‘’
-df=pd.read_excel(r"C:\Users\wb-zlf394266\Desktop\搜索query\AE_QUERY.xlsx",sheet_name=0)
+df=pd.read_excel(r"C:\Users\wb-zlf394266\Desktop\搜索query\AREN\AREN-SC-QUERY.xlsx",sheet_name=0)
 #预览列
 df.columns
 
 
 #GAT： GOOGLE-WEB& AE &TOP
-GAT=df.loc[(df['translator']== '模拟AE搜索翻译')]
+GAT=df.loc[(df['translator']== '模拟sc搜索翻译')]
 
 #Invalid Source 数据
 Invalid_Source=GAT.loc[GAT['Subtypes']=='Source']
@@ -76,7 +76,8 @@ b=Invalid_Source['ID'].drop_duplicates()
 
 ##Invalid Target 数据
 Invalid_Target=GAT.loc[GAT['Subtypes']=='Target']
-I_T=Invalid_Source['ID'].drop_duplicates()
+I_T=Invalid_Target['ID'].drop_duplicates()
+print("invalid target:",I_T.count())
 
 #看Invalid_Source unique ID 和ID 计数
 print('Invalid_Source_count_b:',b.count())
@@ -107,30 +108,33 @@ print('Source Issue count si:',si.count())
 
 Accuracy=GAT.loc[GAT['Issue Types']=='Accuracy']
 a=Accuracy['ID'].drop_duplicates()
+a_I_T=pd.Series(list(set(a).union(set(I_T))))
+AT=a_I_T.drop_duplicates()
+
 '''
 for a1 in a:
    print(a)
 #看Accuracy unique ID 和ID计数
 '''
-print('Accuracy_count_a:',a.count())
+print('Accuracy_count_a:',AT.count())
 
 
 
 #intersection_sourceissue_accuracy 看accuracy 和 source_issue的交集
-inter_s_a=pd.Series(list(set(si).intersection(set(a))))
+inter_s_a=pd.Series(list(set(si).intersection(set(AT))))
 print('Accuracy_caused_by_source_issue_count:',inter_s_a.count())
-print（）
+
 
 Product_Item=GAT.loc[(GAT['Issue Types']=='Fluency')&(GAT['Subtypes']=='Grammar_Word_Form')&(GAT['Labels']=='Product_Item')]
 c=Product_Item['ID'].drop_duplicates()
 #看Product_Item unique ID 和ID 计数
 print('Product_Item_count_c:',c.count())
-'''
+
 #看product_item unique ID
 print('Product_Item unique ID:')
 for c1 in (c):
     print(c1)
-'''
+
     
 Brand_Series=GAT.loc[(GAT['Issue Types']=='Fluency')&(GAT['Subtypes']=='Grammar_Function_Words')&(GAT['Labels']=='Brand&Series')]
 cc=Brand_Series['ID'].drop_duplicates()
@@ -151,6 +155,5 @@ p_b.drop_duplicates()
 #intersection_sourceissue_Fluency
 print('Fluency_caused_by_source_issue:')
 inter_s_a=pd.Series(list(set(si).intersection(set(p_b.drop_duplicates()))))
-inter_s_a
-
-
+print("Fluency caused by source issue:",inter_s_a.count())
+print("Fluency caused by source issue ID:",inter_s_a)
