@@ -1,0 +1,4 @@
+
+string
+  string.capwords()
+#单词大写
