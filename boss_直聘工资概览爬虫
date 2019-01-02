@@ -1,17 +1,22 @@
-url='https://www.zhipin.com/c101210100/?query=数据分析师&page='
-#http地址为搜索界面地址，删page= 后字段
+url='https://www.zhipin.com/c101210100/?query=人事主管&page='
+#bosszhipin网址
 headers={
   'user-agent':'Mozilla/5.0'
 }
 page=1
-hud=['职位名','薪资1','薪资2','职位名','地点','经验','学历','公司行业','融资阶段','公司人数','发布日期','发布人']
-print('\t'.join(hud))
+hud=['职位名','网址','薪资1','薪资2','职位名','地点','经验','学历','公司行业','融资阶段','公司人数','发布日期','发布人']
+#print('\t'.join(hud))
 
+import pandas as pd
+from pandas import DataFrame
 import requests
 from bs4 import BeautifulSoup
 import time
+
+
 for n in range(1,11):  
     html=requests.get(url+str(page),headers=headers)
+    print(html.status_code)
     page+=1  
     soup = BeautifulSoup(html.text, 'html.parser')
     for item in soup.find_all('div','job-primary'):
@@ -37,10 +42,21 @@ for n in range(1,11):
       shuchu.append(item.find('div','info-publis').find('p').string.replace('发布于','')) #发布日期
       shuchu.append(item.find('div','info-publis').find('h3').contents[3].string) #发布人
 
-      print('\t'.join(shuchu))
-      time.sleep(1)
+      
+     
+    
+      wangzhi=item.find('a').get('href').replace('/job_detail/','https://www.zhipin.com/job_detail/')
+      shuchu.append(wangzhi)#wangzhi
+    
+      spc='\t'.join(shuchu)
+      print(spc)
       
       
+      c={'spc':spc}
+      data=DataFrame(c,index=c)
+      
+      data.to_csv('d:/test/renshizhuguan.csv',mode='a')
+      #存储到 本地csv文件，增加模式 不覆盖原有数据
       可以算出岗位分布 薪资 等相关数据
 
 
