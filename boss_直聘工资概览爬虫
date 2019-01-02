@@ -46,7 +46,7 @@ for n in range(1,11):
      
     
       wangzhi=item.find('a').get('href').replace('/job_detail/','https://www.zhipin.com/job_detail/')
-      shuchu.append(wangzhi)#wangzhi
+      shuchu.append(wangzhi)  #网址超链接
     
       spc='\t'.join(shuchu)
       print(spc)
